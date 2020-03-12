@@ -1,0 +1,22 @@
+.content{
+  height: 100%;
+  text-align: center;
+  background: url("/assets/image/diceng.png")no-repeat center/100% 100%;
+  overflow: hidden;
+}
+.content>h3{
+  color: #FFF;
+  margin: 200px auto 16px;
+}
+.login-form {
+  display: inline-block;
+  width: 300px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}

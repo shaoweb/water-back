@@ -1,0 +1,135 @@
+<div class="gutter-example">
+  <div nz-row nzGutter="16">
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>区域位置:</span>
+        <nz-cascader [nzOptions]="nzOptions" [(ngModel)]="areasId" (ngModelChange)="onChanges($event)"></nz-cascader>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span (click)="clickFun()">工程名称:</span>
+        <input nz-input placeholder="请输入工程名称" [(ngModel)]="name" />
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>工程等级:</span>
+        <nz-select [(ngModel)]="rank" nzAllowClear nzPlaceHolder="请选择工程等级">
+          <nz-option nzValue="I" nzLabel="I"></nz-option>
+          <nz-option nzValue="II" nzLabel="II"></nz-option>
+          <nz-option nzValue="III" nzLabel="III"></nz-option>
+          <nz-option nzValue="IV" nzLabel="IV"></nz-option>
+          <nz-option nzValue="V" nzLabel="V"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>工程规模:</span>
+        <nz-select [(ngModel)]="size" nzAllowClear nzPlaceHolder="请选择工程规模">
+          <nz-option nzValue="大（1）型" nzLabel="大（1）型"></nz-option>
+          <nz-option nzValue="大（2）型" nzLabel="大（2）型"></nz-option>
+          <nz-option nzValue="大（3）型" nzLabel="大（3）型"></nz-option>
+          <nz-option nzValue="中（1）型" nzLabel="中（1）型"></nz-option>
+          <nz-option nzValue="中（2）型" nzLabel="中（2）型"></nz-option>
+          <nz-option nzValue="中（3）型" nzLabel="中（3）型"></nz-option>
+          <nz-option nzValue="小（1）型" nzLabel="小（1）型"></nz-option>
+          <nz-option nzValue="小（2）型" nzLabel="小（2）型"></nz-option>
+          <nz-option nzValue="小（3）型" nzLabel="小（3）型"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+  </div>
+  <div nz-row nzGutter="16">
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>设计流量:</span>
+        <input nz-input placeholder="请输入设计流量" [(ngModel)]="flow" />
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>制造时间:</span>
+        <nz-date-picker [nzStyle]="{'width': '200px'}" [(ngModel)]="buildTime" (ngModelChange)="onChange($event)">
+        </nz-date-picker>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>间隔时间:</span>
+        <nz-input-number [(ngModel)]="time" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>工程类型:</span>
+        <nz-select [(ngModel)]="type" nzAllowClear nzPlaceHolder="工程类型">
+          <nz-option nzValue="大（1）型" nzLabel="大（1）型"></nz-option>
+          <nz-option nzValue="大（2）型" nzLabel="大（2）型"></nz-option>
+          <nz-option nzValue="大（3）型" nzLabel="大（3）型"></nz-option>
+          <nz-option nzValue="中（1）型" nzLabel="中（1）型"></nz-option>
+          <nz-option nzValue="中（2）型" nzLabel="中（2）型"></nz-option>
+          <nz-option nzValue="中（3）型" nzLabel="中（3）型"></nz-option>
+          <nz-option nzValue="小（1）型" nzLabel="小（1）型"></nz-option>
+          <nz-option nzValue="小（2）型" nzLabel="小（2）型"></nz-option>
+          <nz-option nzValue="小（3）型" nzLabel="小（3）型"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>最新工程:</span>
+        <nz-select [(ngModel)]="level" nzAllowClear nzPlaceHolder="工程类型">
+          <nz-option nzValue="大（1）型" nzLabel="大（1）型"></nz-option>
+          <nz-option nzValue="大（2）型" nzLabel="大（2）型"></nz-option>
+          <nz-option nzValue="大（3）型" nzLabel="大（3）型"></nz-option>
+          <nz-option nzValue="中（1）型" nzLabel="中（1）型"></nz-option>
+          <nz-option nzValue="中（2）型" nzLabel="中（2）型"></nz-option>
+          <nz-option nzValue="中（3）型" nzLabel="中（3）型"></nz-option>
+          <nz-option nzValue="小（1）型" nzLabel="小（1）型"></nz-option>
+          <nz-option nzValue="小（2）型" nzLabel="小（2）型"></nz-option>
+          <nz-option nzValue="小（3）型" nzLabel="小（3）型"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>检测单位:</span>
+        <input nz-input placeholder="请输入检测单位" [(ngModel)]="unit" />
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span>工程概况:</span>
+        <input nz-input placeholder="请输入工程概况" [(ngModel)]="overview" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clearfix">
+  <nz-upload
+    nzAction="https://jsonplaceholder.typicode.com/posts/"
+    nzListType="picture-card"
+    [(nzFileList)]="fileList"
+    [nzShowButton]="fileList.length < 3"
+    [nzShowUploadList]="showUploadList"
+    [nzPreview]="handlePreview"
+  >
+    <i nz-icon nzType="plus"></i>
+    <div class="ant-upload-text">Upload</div>
+  </nz-upload>
+  <nz-modal
+    [nzVisible]="previewVisible"
+    [nzContent]="modalContent"
+    [nzFooter]="null"
+    (nzOnCancel)="previewVisible = false"
+  >
+    <ng-template #modalContent>
+      <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+    </ng-template>
+  </nz-modal>
+</div>
+
+<button nz-button nzType="primary" (click)="loadOne()" [nzLoading]="isLoadingOne">提交</button>
+

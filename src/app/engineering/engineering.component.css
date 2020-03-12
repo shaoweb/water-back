@@ -1,0 +1,22 @@
+.gutter-row {
+  margin-bottom: 12px;
+}
+
+input,
+nz-date-picker,
+nz-select,
+nz-input-number,
+nz-cascader {
+  width: 200px;
+  margin-left: 12px;
+}
+
+i[nz-icon] {
+  font-size: 32px;
+  color: #999;
+}
+
+.ant-upload-text {
+  margin-top: 8px;
+  color: #666;
+}
