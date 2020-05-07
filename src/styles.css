@@ -17,3 +17,15 @@ html,body,div,ul,ul li,span,a,p,h1,h2,h3,h4,input,i,em{
 ul li{
     list-style: none;
 }
+
+.fl{
+  float: left;
+}
+
+.fr{
+  float: right;
+}
+
+.red{
+  color: red;
+}

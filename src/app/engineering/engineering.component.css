@@ -1,17 +1,43 @@
+h3,
+.gutter-example,
+.imgBox {
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+h3>i{
+  cursor: pointer;
+  color: #999;
+  margin-left: 6px;
+}
+
+h3>button{
+  margin-right: 15px;
+}
+
+.tableBox {
+  margin-bottom: 20px;
+}
+
 .gutter-row {
   margin-bottom: 12px;
+}
+
+.gutter-box>span {
+  display: inline-block;
+  margin-right: 12px;
 }
 
 input,
 nz-date-picker,
 nz-select,
 nz-input-number,
-nz-cascader {
+nz-cascader,
+nz-tree-select {
   width: 200px;
-  margin-left: 12px;
 }
 
-i[nz-icon] {
+.plus {
   font-size: 32px;
   color: #999;
 }
@@ -19,4 +45,27 @@ i[nz-icon] {
 .ant-upload-text {
   margin-top: 8px;
   color: #666;
+}
+
+.tableBox>table {
+  width: 100%;
+}
+
+
+.tableBox>table>thead>tr>th,
+.tableBox>table>tbody>tr>td {
+  padding: 4px 0;
+  text-align: center;
+  border: 1px solid #DEDEDE;
+}
+
+.tableBox>table>tbody>tr>td>input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding-left: 12px;
+}
+
+.tableBox>table>tbody>tr>td>i{
+  cursor: pointer;
 }

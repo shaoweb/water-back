@@ -1,22 +1,33 @@
 // Angular Core
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 // rxjs
 import { Observable, throwError } from 'rxjs';
 import { map, timeout, catchError } from "rxjs/operators"
 
+import { ClusterThe } from './mock.api';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 @Injectable()
 export class RequestService {
     private setTimeout: number = 5000;  // 默认的超时时间
 
-    constructor(private http: HttpClient, private router: Router) {
+    clusterThe: any = new ClusterThe();
+
+    constructor(private http: HttpClient, private router: Router, private message: NzMessageService) {
     }
 
     /** 添加Authorization的属性 */
     private addAuthorization(options: any): void {
         options['withCredentials'] = true;
     }
+
+    /** 修改请求头 */
+    private headers = new HttpHeaders({
+        'accessToken': this.clusterThe.getCookie('accessToken') || null
+    })
+
 
     /** get 请求
      * 获取数据
@@ -50,6 +61,7 @@ export class RequestService {
             catchError(this.httpErrorFun), // 处理错误信息(必须放在timeout和map之间)
             map((res: any) => this.resFun(res))
         );
+
     }
 
     /** 返回数据的处理
@@ -62,7 +74,9 @@ export class RequestService {
         // 当code为0时
         if (thisData['code'] == 0) {
             res = thisData; // 给最终值赋值
-        } else {
+        } else if(thisData['code'] == 400){
+            this.message.create('warning','请将必填项填写完整')
+        }else{
             // 当status不为200时
             let err = thisData['message'];  // 错误信息
             throw new Error(err);  // 抛出错误
@@ -96,6 +110,7 @@ export class RequestService {
             res = '您没有权限，请重新登录';
         } else {
             res = "系统错误，请联系管理员";
+
         }
 
         return throwError(res);

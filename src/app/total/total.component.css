@@ -1,0 +1,39 @@
+i{
+    cursor: pointer;
+}
+
+.paremter_list,
+.information_box{
+    overflow: hidden;
+}
+
+.information_box>li{
+    float: left;
+    width: 50%;
+}
+
+.paremter_list>li,
+.information_box>li{
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.paremter_list>li>span,
+.information_box>li>span{
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.information_box>li>input,nz-select,nz-input-number{
+    width: 200px;
+}
+
+.security{
+    width: 100%;
+}
+
+.security>thead>tr>th,
+.security>tbody>tr>td{
+    padding: 4px 6px;
+    border: 1px solid #DEDEDE;
+}

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RequestService } from '../request.service';
+import { Router } from '@angular/router';
+import { APIROUTER } from '../mock.api';
+
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-login',
@@ -7,23 +11,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  validateForm: FormGroup;
+  
+  constructor(private req: RequestService, private message: NzMessageService, private router: Router) {}
 
-  submitForm(): void {
-    for (const i in this.validateForm.controls) {
-      this.validateForm.controls[i].markAsDirty();
-      this.validateForm.controls[i].updateValueAndValidity();
-    }
-  }
+  isLoadingOne:boolean = false;
 
-  constructor(private fb: FormBuilder) {}
+  // 接口
+  routerApi: any = APIROUTER;
+
+  // 登录参数
+  parameter: any = {};
 
   ngOnInit(): void {
-    this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
-      password: [null, [Validators.required]],
-      remember: [true]
-    });
+    
+  }
+
+  submitForm(): void {
+    this.isLoadingOne = true;
+    setTimeout(() => {
+      this.isLoadingOne = false;
+    }, 5000);
+    this.req.postData(this.routerApi.login, this.parameter).subscribe(res=>{
+      // 添加token
+      document.cookie='accessToken=' + res['data'];
+      // 跳转首页
+      this.router.navigateByUrl('/content/engineering');
+    },error=>{
+      this.message.create('error', error);
+    })
   }
 
 }

@@ -9,9 +9,13 @@
             <li nz-menu-item>Alex</li>
           </ul>
         </li> -->
-        <li nz-menu-item>
+        <li nz-menu-item routerLink="/content/engineering">
           <i nz-icon nzType="file"></i>
           <span>添加工程信息</span>
+        </li>
+        <li nz-menu-item routerLink="/content/total">
+          <i nz-icon nzType="file"></i>
+          <span>工程信息管理</span>
         </li>
       </ul>
     </nz-sider>
@@ -23,6 +27,7 @@
           [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
           (click)="isCollapsed = !isCollapsed"
         ></i>
+        <button class="loginUp fr" routerLink="/login" nz-button nzType="primary">登出</button>
       </nz-header>
       <nz-content>
         <div class="inner-content">

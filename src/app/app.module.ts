@@ -15,13 +15,17 @@ registerLocaleData(zh);
 import { ContentComponent } from './content/content.component';
 import { LoginComponent } from './login/login.component';
 import { EngineeringComponent } from './engineering/engineering.component';
+import { InformationUpdateComponent } from './information-update/information-update.component';
+import { TotalComponent } from './total/total.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContentComponent,
     LoginComponent,
-    EngineeringComponent
+    EngineeringComponent,
+    InformationUpdateComponent,
+    TotalComponent
   ],
   imports: [
     AppRoutingModule,
