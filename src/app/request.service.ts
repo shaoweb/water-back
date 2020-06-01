@@ -11,7 +11,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Injectable()
 export class RequestService {
-    private setTimeout: number = 5000;  // 默认的超时时间
+    private setTimeout: number = 10000;  // 默认的超时时间
 
     clusterThe: any = new ClusterThe();
 

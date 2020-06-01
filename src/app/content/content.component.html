@@ -1,6 +1,8 @@
 <nz-layout>
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-      <div class="logo"></div>
+      <div class="logo">
+        <img src="assets/image/NHRI_logo.png" alt="">
+      </div>
       <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
         <!-- <li nz-submenu nzTitle="User" nzIcon="user">
           <ul>
@@ -9,13 +11,13 @@
             <li nz-menu-item>Alex</li>
           </ul>
         </li> -->
-        <li nz-menu-item routerLink="/content/engineering">
-          <i nz-icon nzType="file"></i>
-          <span>添加工程信息</span>
-        </li>
         <li nz-menu-item routerLink="/content/total">
           <i nz-icon nzType="file"></i>
           <span>工程信息管理</span>
+        </li>
+        <li nz-menu-item routerLink="/content/engineering">
+          <i nz-icon nzType="file"></i>
+          <span>添加工程信息</span>
         </li>
       </ul>
     </nz-sider>

@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
   { path: 'content', component: ContentComponent, children:[
-    { path: '', redirectTo: '/content/engineering', pathMatch: 'full'},
+    { path: '', redirectTo: '/content/total', pathMatch: 'full'},
     { path: 'total', component: TotalComponent },
     { path: 'engineering', component: EngineeringComponent },
     { path: 'informationupdate', component: InformationUpdateComponent }

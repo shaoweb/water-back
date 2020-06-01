@@ -1,5 +1,6 @@
 // http://58.246.211.154:14200/wcp/
 const API = 'http://58.246.211.154:14200/wcp/';
+// const API = 'http://192.168.1.136:8080/wcp/';
 
 export const APIROUTER = {
     login: API + 'user/login', //登录
@@ -15,15 +16,17 @@ export const APIROUTER = {
     addMaintain: API + 'mai/addMaintain', //工程维修、加固新增
     addStru: API + 'para/addStru', //安全检测新增
     getStruValue: API + 'para/getStruValue', //安全检测查询
+    getAreaInfoTree: API + 'area/getAreaInfoTree', // 省市区三级联动
     exportPro: API + 'excel/exportPro', //excel模板下载
     importPro: API + 'excel/importPro', //excel模板导入
+    deleteImg: API + 'pro/deleteImg', //图片删除
 }
 
 // 公用方法配置
 export class ClusterThe {
 
     // 取cookie的值,传入你要取得cookie值的名字
-    getCookie(value: string): string{
+    getCookie(value: string): string {
         var aCookie = document.cookie.split(";"); // 将所有cookie键值对通过分号分割为数组;
         // 循环遍历所有cookie键值对
         for (var i = 0; i < aCookie.length; i++) {
@@ -59,8 +62,8 @@ export class ClusterThe {
         }
     };
 
-     // 返回当前时间
-     currentDate(date: string, type?: string): string {
+    // 返回当前时间
+    currentDate(date: string, type?: string): string {
         if (date != null && date != "") {
             let yer: string | number,
                 month: string | number,

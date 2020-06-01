@@ -59,39 +59,7 @@
     </div>
     <div nz-col class="gutter-row" nzSpan="6">
       <div class="gutter-box">
-        <span><i class="red">*</i>省份位置:</span>
-        <nz-select [(ngModel)]="currentProvince" nzAllowClear nzPlaceHolder="请选择省份" (ngModelChange)="onExpandChange(currentProvince)">
-          <nz-option *ngFor="let item of levelThree.province" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
-        </nz-select>
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span>市区位置:</span>
-        <nz-select [(ngModel)]="currentCity" nzAllowClear nzPlaceHolder="请选择市区位置" (ngModelChange)="onChangeCounty(currentCity)">
-          <nz-option *ngFor="let item of levelThree.cityThe" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
-        </nz-select>
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span>县城位置:</span>
-        <nz-select [(ngModel)]="currentCounty" nzAllowClear nzPlaceHolder="请选择县城位置">
-          <nz-option *ngFor="let item of levelThree.county" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
-        </nz-select>
-      </div>
-    </div>
-  </div>
-  <div nz-row nzGutter="16">
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>设计流量:</span>
-        <nz-input-number [(ngModel)]="data.flow" [nzMin]="1" [nzStep]="1"></nz-input-number>
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>制造时间:</span>
+        <span><i class="red">*</i>建造时间:</span>
         <nz-date-picker [nzStyle]="{'width': '200px'}" [(ngModel)]="buildTime">
         </nz-date-picker>
       </div>
@@ -112,8 +80,49 @@
   <div nz-row nzGutter="16">
     <div nz-col class="gutter-row" nzSpan="6">
       <div class="gutter-box">
+        <span><i class="red">*</i>设计流量:</span>
+        <nz-input-number [(ngModel)]="data.flow" [nzMin]="1" [nzStep]="1"></nz-input-number>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>省份位置:</span>
+        <nz-select [(ngModel)]="currentProvince" nzAllowClear nzPlaceHolder="请选择省份" (ngModelChange)="onExpandChange(currentProvince)">
+          <nz-option *ngFor="let item of levelThree.province" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red"> </i>市区位置:</span>
+        <nz-select [(ngModel)]="currentCity" nzAllowClear nzPlaceHolder="请选择市区位置" (ngModelChange)="onChangeCounty(currentCity)">
+          <nz-option *ngFor="let item of levelThree.cityThe" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red"> </i>县城位置:</span>
+        <nz-select [(ngModel)]="currentCounty" nzAllowClear nzPlaceHolder="请选择县城位置">
+          <nz-option *ngFor="let item of levelThree.county" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+  </div>
+  <div nz-row nzGutter="16">
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
         <span><i class="red">*</i>工程概况:</span>
         <input nz-input placeholder="请输入工程概况" [(ngModel)]="data.overview" />
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>项目状态:</span>
+        <nz-select [(ngModel)]="data.status" nzAllowClear nzPlaceHolder="请选择项目状态">
+          <nz-option [nzValue]="0" nzLabel="在建"></nz-option>
+          <nz-option [nzValue]="1" nzLabel="完工"></nz-option>
+        </nz-select>
       </div>
     </div>
   </div>

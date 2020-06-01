@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       // 添加token
       document.cookie='accessToken=' + res['data'];
       // 跳转首页
-      this.router.navigateByUrl('/content/engineering');
+      this.router.navigateByUrl('/content');
     },error=>{
       this.message.create('error', error);
     })

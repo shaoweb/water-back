@@ -1,7 +1,7 @@
 .content{
   height: 100%;
   text-align: center;
-  background: url("/forwcps/assets/image/diceng.png")no-repeat center/100% 100%;
+  background: url("/assets/image/diceng.png")no-repeat center/100% 100%;
   overflow: hidden;
 }
 .content>h3{

@@ -1,5 +1,94 @@
+<!-- 搜索条件 -->
+<div nz-row class="search">
+    <ul nz-col nzSpan="22" class="searBox">
+        <li class="fl">
+            <span>工程等级：</span>
+            <nz-select [(ngModel)]="parameter.rank" nzAllowClear nzPlaceHolder="请选择工程等级">
+                <nz-option nzValue="Ⅰ" nzLabel="I"></nz-option>
+                <nz-option nzValue="Ⅱ" nzLabel="II"></nz-option>
+                <nz-option nzValue="Ⅲ" nzLabel="III"></nz-option>
+                <nz-option nzValue="Ⅳ" nzLabel="IV"></nz-option>
+                <nz-option nzValue="Ⅴ" nzLabel="V"></nz-option>
+            </nz-select>
+        </li>
+        <li class="fl">
+            <span>工程规模：</span>
+            <nz-select [(ngModel)]="parameter.size" nzAllowClear nzPlaceHolder="请选择工程规模">
+                <nz-option nzValue="大（1）型" nzLabel="大（1）型"></nz-option>
+                <nz-option nzValue="大（2）型" nzLabel="大（2）型"></nz-option>
+                <nz-option nzValue="中型" nzLabel="中型"></nz-option>
+                <nz-option nzValue="小（1）型" nzLabel="小（1）型"></nz-option>
+                <nz-option nzValue="小（2）型" nzLabel="小（2）型"></nz-option>
+            </nz-select>
+        </li>
+        <li class="fl">
+            <span>建造时间：</span>
+            <nz-date-picker [nzStyle]="{'width': '200px'}" [(ngModel)]="parameter.buildTime"></nz-date-picker>
+        </li>
+        <li class="fl">
+            <span>是否检测：</span>
+            <nz-select [(ngModel)]="parameter.sta" nzAllowClear nzPlaceHolder="请选择是否到达检测">
+                <nz-option [nzValue]="0" nzLabel="到期未检"></nz-option>
+                <nz-option [nzValue]="1" nzLabel="到期已检"></nz-option>
+            </nz-select>
+        </li>
+        <li class="fl">
+            <span>设计流量：</span>
+            <nz-input-number [(ngModel)]="parameter.flow" [nzMin]="1" [nzStep]="1"></nz-input-number>
+        </li>
+        <li class="fl">
+            <span>所属地区：</span>
+            <div class="select_box">
+                <nz-select [(ngModel)]="provinceCityArea.province" nzAllowClear nzPlaceHolder="请选择省"
+                    (ngModelChange)="onExpandChange($event)">
+                    <nz-option *ngFor="let data of levelThree.province" [nzValue]="data.id" [nzLabel]="data.name">
+                    </nz-option>
+                </nz-select>
+                <nz-select [(ngModel)]="provinceCityArea.city" nzAllowClear nzPlaceHolder="请选择市"
+                    (ngModelChange)="onChangeCounty($event)">
+                    <nz-option *ngFor="let data of levelThree.city" [nzValue]="data.id" [nzLabel]="data.name">
+                    </nz-option>
+                </nz-select>
+                <nz-select [(ngModel)]="provinceCityArea.area" nzAllowClear nzPlaceHolder="请选择区/县">
+                    <nz-option *ngFor="let data of levelThree.area" [nzValue]="data.id" [nzLabel]="data.name">
+                    </nz-option>
+                </nz-select>
+            </div>
+        </li>
+    </ul>
+    <div nz-col nzSpan="2" class="searButon">
+        <button nz-button nzType="primary" (click)="searchAll()">查询</button>
+    </div>
+</div>
+<!-- 操作 -->
+<ul class="clearfix buton_box">
+    <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(1)">工程现状新增</button>
+    </li>
+    <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(2)">工程险情新增</button>
+    </li>
+    <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(3)">工程修改/加固新增</button>
+    </li>
+    <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(4)">安全检测新增</button>
+    </li>
+    <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(5)">安全复核新增</button>
+    </li>
+    <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(6)">安全复核查询</button>
+    </li>
+    <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(7)">图片新增</button>
+    </li>
+    <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(8)">图片删除</button>
+    </li>
+</ul>
 <!-- 数据展示 -->
-<nz-table #basicTable [nzData]="totalData" [nzShowSizeChanger]="true" [nzFrontPagination]="false"
+<nz-table #basicTable nzSize="middle" [nzData]="totalData" [nzShowSizeChanger]="true" [nzFrontPagination]="false"
     [nzPageSize]="parameter.count" [nzPageIndex]="parameter.page" [nzTotal]="totalItems"
     (nzPageIndexChange)="searchData($event)" (nzPageSizeChange)="pageSizeChange($event)" [nzBordered]="true">
     <thead>
@@ -12,14 +101,16 @@
             <th [nzAlign]="'center'">工程类别</th>
             <th [nzAlign]="'center'">区域位置</th>
             <th [nzAlign]="'center'">设计流量</th>
-            <th [nzAlign]="'center'">制造时间</th>
+            <th [nzAlign]="'center'">建造时间</th>
             <th [nzAlign]="'center'">间隔时间</th>
             <th [nzAlign]="'center'">检测单位</th>
+            <th [nzAlign]="'center'">项目状态</th>
             <th [nzAlign]="'center'">操作</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let data of basicTable.data; let i = index;">
+        <tr *ngFor="let data of basicTable.data; let i = index;" [ngClass]="{'select': currentData == data}"
+            (click)="currentData=data">
             <td [nzAlign]="'center'">{{i+1}}</td>
             <td [nzAlign]="'center'">{{data.name}}</td>
             <td [nzAlign]="'center'">{{data.typeName}}</td>
@@ -31,30 +122,14 @@
             <td [nzAlign]="'center'">{{data.buildTime}}</td>
             <td [nzAlign]="'center'">{{data.time}}</td>
             <td [nzAlign]="'center'">{{data.unit}}</td>
+            <td [nzAlign]="'center'" *ngIf="data.status == 0">在建</td>
+            <td [nzAlign]="'center'" *ngIf="data.status == 1">完工</td>
             <td [nzAlign]="'center'">
                 <i nz-icon nzType="form" nzTheme="outline" nz-tooltip nzTooltipTitle="编辑"
-                    (click)="modalSelect(data,0)"></i>
+                    (click)="modalSelect(0,data)"></i>
                 <nz-divider nzType="vertical"></nz-divider>
-                <i nz-icon nzType="plus-square" nzTheme="outline" nz-tooltip nzTooltipTitle="工程现状新增"
-                    (click)="modalSelect(data, 1)"></i>
-                <nz-divider nzType="vertical"></nz-divider>
-                <i nz-icon nzType="plus-square" nzTheme="outline" nz-tooltip nzTooltipTitle="工程险情新增"
-                    (click)="modalSelect(data, 2)"></i>
-                <nz-divider nzType="vertical"></nz-divider>
-                <i nz-icon nzType="plus-square" nzTheme="outline" nz-tooltip nzTooltipTitle="工程修改/加固新增"
-                    (click)="modalSelect(data, 3)"></i>
-                <nz-divider nzType="vertical"></nz-divider>
-                <i nz-icon nzType="plus-square" nzTheme="outline" nz-tooltip nzTooltipTitle="安全检测新增"
-                    (click)="modalSelect(data, 4)"></i>
-                <nz-divider nzType="vertical"></nz-divider>
-                <i nz-icon nzType="plus-square" nzTheme="outline" nz-tooltip nzTooltipTitle="安全复核新增"
-                    (click)="modalSelect(data, 5)"></i>
-                <nz-divider nzType="vertical"></nz-divider>
-                <i nz-icon nzType="eye" nzTheme="outline" nz-tooltip nzTooltipTitle="安全复核查询"
-                    (click)="modalSelect(data, 6)"></i>
-                <nz-divider nzType="vertical"></nz-divider>
-                <i nz-icon nzType="plus-square" nzTheme="outline" nz-tooltip nzTooltipTitle="图片新增"
-                    (click)="modalSelect(data, 7)"></i>
+                <i nz-icon nzType="plus-square" nzTheme="outline" nz-tooltip nzTooltipTitle="详情展示"
+                    (click)="modalSelect(9,data)"></i>
             </td>
         </tr>
     </tbody>
@@ -111,7 +186,7 @@
             <nz-input-number [(ngModel)]="currentData.flow" [nzMin]="1" [nzStep]="2"></nz-input-number>
         </li>
         <li>
-            <span>制造时间</span>
+            <span>建造时间</span>
             <nz-date-picker [nzStyle]="{'width': '200px'}" [(ngModel)]="currentData.buildTime"></nz-date-picker>
         </li>
         <li>
@@ -127,6 +202,10 @@
 <!-- 工程现状新增 -->
 <nz-modal [(nzVisible)]="statusquoAdd" nzTitle="工程现状新增" (nzOnCancel)="statusquoAdd=false" (nzOnOk)="statusquoSubmit()">
     <ul class="paremter_list">
+        <li>
+            <span><i class="red">*</i>工程名称</span>
+            <input nz-input placeholder="内容" [(ngModel)]="currentData.name" readonly />
+        </li>
         <li>
             <span><i class="red">*</i>内容</span>
             <input nz-input placeholder="内容" [(ngModel)]="statusParameter.con" />
@@ -147,8 +226,12 @@
 <nz-modal [(nzVisible)]="dangerAdd" nzTitle="工程险情新增" (nzOnCancel)="dangerAdd=false" (nzOnOk)="dangerSubmit()">
     <ul class="paremter_list">
         <li>
+            <span><i class="red">*</i>工程名称</span>
+            <input nz-input placeholder="内容" [(ngModel)]="currentData.name" readonly />
+        </li>
+        <li>
             <span><i class="red">*</i>险情出现时间:</span>
-            <nz-date-picker [nzStyle]="{'width':'100%'}" [(ngModel)]="dangerParameter.date"></nz-date-picker>
+            <nz-date-picker [nzStyle]="{'width':'472px'}" [(ngModel)]="dangerParameter.date"></nz-date-picker>
         </li>
         <li>
             <span>险情内容</span>
@@ -161,12 +244,16 @@
     (nzOnOk)="strengtheningSubmit()">
     <ul class="paremter_list">
         <li>
+            <span><i class="red">*</i>工程名称</span>
+            <input nz-input placeholder="内容" [(ngModel)]="currentData.name" readonly />
+        </li>
+        <li>
             <span><i class="red">*</i>维修/加固时间:</span>
-            <nz-date-picker [nzStyle]="{'width':'100%'}" [(ngModel)]="strengtheningPar.date"></nz-date-picker>
+            <nz-date-picker [nzStyle]="{'width':'472px'}" [(ngModel)]="strengtheningPar.date"></nz-date-picker>
         </li>
         <li>
             <span>维修/加固理由</span>
-            <textarea nz-input placeholder="请输入维修/加固理由" [(ngModel)]="strengtheningPar.reason" nzAutosize></textarea>
+            <textarea nz-input placeholder="请输入维修/加固理由" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="strengtheningPar.reason" nzAutosize></textarea>
         </li>
     </ul>
 </nz-modal>
@@ -174,6 +261,10 @@
 <nz-modal [(nzVisible)]="inspectionAdd" nzTitle="安全检测新增" (nzOnCancel)="inspectionAdd=false"
     (nzOnOk)="inspectionSumbit()">
     <ul class="information_box">
+        <li>
+            <span><i class="red">*</i>工程名称</span>
+            <input nz-input placeholder="内容" [(ngModel)]="currentData.name" readonly />
+        </li>
         <li>
             <span><i class="red">*</i>请选择部件</span>
             <nz-select [(ngModel)]="inspectionParameter.part" nzAllowClear nzPlaceHolder="部件">
@@ -232,8 +323,12 @@
     (nzOnOk)="securitycheckSumbit()">
     <ul class="paremter_list">
         <li>
+            <span><i class="red">*</i>工程名称</span>
+            <input nz-input placeholder="内容" [(ngModel)]="currentData.name" readonly />
+        </li>
+        <li>
             <span><i class="red">*</i>内容</span>
-            <nz-select [(ngModel)]="securitycheckPar.con" nzAllowClear nzPlaceHolder="内容">
+            <nz-select [ngStyle]="{'width': '472px'}" [(ngModel)]="securitycheckPar.con" nzAllowClear nzPlaceHolder="内容">
                 <nz-option nzValue="防洪标准复核" nzLabel="防洪标准复核"></nz-option>
                 <nz-option nzValue="渗流安全复核" nzLabel="渗流安全复核"></nz-option>
                 <nz-option nzValue="结构安全复核" nzLabel="结构安全复核"></nz-option>
@@ -251,19 +346,19 @@
     </ul>
 </nz-modal>
 <!-- 安全复核查询 -->
-<nz-modal [(nzVisible)]="securitycheckModle" nzWidth="800px" nzTitle="安全复核查询" (nzOnCancel)="securitycheckModle=false"
+<nz-modal [(nzVisible)]="securitycheckModle" nzWidth="1000px" nzTitle="安全复核查询" (nzOnCancel)="securitycheckModle=false"
     (nzOnOk)="securitycheckModle=false">
-    <nz-table #securiTable [nzData]="securityData" [nzFrontPagination]='false' [nzBordered]="true" [nzSize]="'small'">
+    <nz-table #securiTable nzSize="small" [nzData]="securityData" [nzFrontPagination]='false' [nzBordered]="true" [nzScroll]="{ y: '280px' }">
         <thead>
             <tr>
-                <th [nzAlign]="'center'">序号</th>
-                <th [nzAlign]="'center'">部件</th>
-                <th [nzAlign]="'center'">部位</th>
-                <th [nzAlign]="'center'">指标名</th>
-                <th [nzAlign]="'center'">极大值</th>
-                <th [nzAlign]="'center'">极小值</th>
-                <th [nzAlign]="'center'">平均值</th>
-                <th [nzAlign]="'center'">规范/设计要求值</th>
+                <th [nzAlign]="'center'" nzWidth="60px">序号</th>
+                <th [nzAlign]="'center'" nzWidth="12%">部件</th>
+                <th [nzAlign]="'center'" nzWidth="12%">部位</th>
+                <th [nzAlign]="'center'" nzWidth="12%">指标名</th>
+                <th [nzAlign]="'center'" nzWidth="10%">极大值</th>
+                <th [nzAlign]="'center'" nzWidth="10%">极小值</th>
+                <th [nzAlign]="'center'" nzWidth="10%">平均值</th>
+                <th [nzAlign]="'center'" nzWidth="15%">规范/设计要求值</th>
                 <th [nzAlign]="'center'">综合状态值</th>
             </tr>
         </thead>
@@ -284,6 +379,7 @@
 </nz-modal>
 <!-- 图片新增 -->
 <nz-modal [(nzVisible)]="customModify" nzTitle="图片新增" (nzOnCancel)="customModify=false" (nzOnOk)="imgaddSubmit()">
+    <p>工程名称: {{currentData.name}}</p>
     <nz-upload [nzAction]="routerApi.uploadImg" nzListType="picture-card" [(nzFileList)]="fileList"
         [nzShowButton]="fileList.length < 3" [nzShowUploadList]="showUploadList" [nzPreview]="handlePreview"
         nzName='img' nzFileType='image/png,image/jpeg'>
@@ -297,3 +393,74 @@
         </ng-template>
     </nz-modal>
 </nz-modal>
+<!-- 图片删除 -->
+<nz-modal [(nzVisible)]="imagesDelect" nzWidth="800px" nzTitle="图片删除" (nzOnCancel)="imagesDelect=false" (nzOnOk)="imagesDelect=false">
+    <p>工程名称: {{currentData.name}}</p>
+    <ul class="image_list clearfix">
+        <li class="fl" *ngFor="let urlSrc of projectInformation.imgs">
+            <span><i nz-icon nzType="delete" nzTheme="outline" (click)="delectImage(urlSrc, currentData.id)"></i></span>
+            <img [src]="urlSrc" alt="">
+        </li>
+    </ul>
+</nz-modal>
+<!-- 工程详情 -->
+<nz-drawer [nzVisible]="projectModify" [nzWidth]="640" [nzClosable]="false" (nzOnClose)="projectModify=false">
+    <nz-descriptions [nzColumn]="2" [nzTitle]="projectInformation.name">
+        <nz-descriptions-item nzTitle="检测单位" *ngIf="projectInformation.unit" [nzSpan]="1">{{ projectInformation.unit }}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="所属流域" *ngIf="!projectInformation.unit" [nzSpan]="1">
+            {{ projectInformation.waterDesc }}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="所属地区" [nzSpan]="1">{{ projectInformation.areaDesc }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="工程等别" [nzSpan]="1">{{ projectInformation.rank }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="工程规模" [nzSpan]="1">{{ projectInformation.size }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="工程类别" [nzSpan]="1">{{ projectInformation.level }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="设计流量" [nzSpan]="1">{{ projectInformation.flow }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="建造时间" [nzSpan]="1">{{ projectInformation.buildTime }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="间隔时间" [nzSpan]="1">{{ projectInformation.time }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="工程概况" [nzSpan]="2">{{ projectInformation.overview }}</nz-descriptions-item>
+    </nz-descriptions>
+    <nz-divider></nz-divider>
+    <nz-descriptions [nzColumn]="2" nzTitle="历次工程险情信息"></nz-descriptions>
+    <nz-table #peojectRiskTable nzSize="small" [nzScroll]="{ y: '340px' }" [nzFrontPagination]="false"
+        [nzData]="projectInformation.ds">
+        <thead>
+            <tr>
+                <th nzAlign="center" nzWidth="46px">序号</th>
+                <th nzWidth="150px">险情时间</th>
+                <th>险情内容</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of peojectRiskTable.data; let i = index">
+                <td nzAlign="center">{{i+1}}</td>
+                <td>{{data.date}}</td>
+                <td>{{data.content}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-divider></nz-divider>
+    <nz-descriptions [nzColumn]="2" nzTitle="历次维修加固信息"></nz-descriptions>
+    <nz-table #maintenanceTable nzSize="small" [nzScroll]="{ y: '340px' }" [nzFrontPagination]="false"
+        [nzData]="projectInformation.ms">
+        <thead>
+            <tr>
+                <th nzAlign="center" nzWidth="46px">序号</th>
+                <th nzWidth="150px">维修/加固时间</th>
+                <th>维修/加固原因</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of maintenanceTable.data; let i = index">
+                <td nzAlign="center">{{i+1}}</td>
+                <td>{{data.date}}</td>
+                <td>{{data.reason}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-divider></nz-divider>
+    <nz-descriptions [nzColumn]="2" nzTitle="工程图片"></nz-descriptions>
+    <ul class="image_list">
+        <li class="fl" *ngFor="let data of projectInformation.imgs"><img [src]="data" alt=""></li>
+    </ul>
+</nz-drawer>

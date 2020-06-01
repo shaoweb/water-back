@@ -1,39 +1,116 @@
-i{
-    cursor: pointer;
+i,
+tbody>tr {
+  cursor: pointer;
 }
 
 .paremter_list,
-.information_box{
-    overflow: hidden;
+.information_box {
+  overflow: hidden;
 }
 
-.information_box>li{
-    float: left;
-    width: 50%;
+.information_box>li {
+  float: left;
+  width: 50%;
 }
 
 .paremter_list>li,
-.information_box>li{
-    margin-bottom: 12px;
-    overflow: hidden;
+.information_box>li {
+  margin-bottom: 12px;
+  overflow: hidden;
 }
 
 .paremter_list>li>span,
-.information_box>li>span{
-    display: inline-block;
-    margin-right: 8px;
+.information_box>li>span {
+  display: inline-block;
+  margin-right: 8px;
 }
 
-.information_box>li>input,nz-select,nz-input-number{
-    width: 200px;
+.information_box>li>input,
+.information_box>li>nz-select,
+.information_box>li>nz-input-number {
+  width: 200px;
 }
 
-.security{
-    width: 100%;
+.security {
+  width: 100%;
 }
 
 .security>thead>tr>th,
-.security>tbody>tr>td{
-    padding: 4px 6px;
-    border: 1px solid #DEDEDE;
+.security>tbody>tr>td {
+  padding: 4px 6px;
+  border: 1px solid #DEDEDE;
+}
+
+.search {
+  margin-bottom: 12px;
+}
+
+.searBox>li {
+  margin-left: 24px;
+  margin-bottom: 12px;
+}
+
+.searBox>li>nz-select,
+.searBox>li>input,
+.searBox>li>nz-input-number {
+  width: 200px;
+}
+
+.buton_box {
+  border-top: 1px solid #DEDEDE;
+  padding-top: 12px;
+}
+
+.buton_box>li {
+  margin-right: 8px;
+}
+
+tbody>.select {
+  background-color: #e6f7ff;
+}
+
+.select_box {
+  display: inline-block;
+}
+
+.select_box>nz-select {
+  width: 160px;
+  margin-right: 12px;
+}
+
+.image_list>li {
+  width: 33%;
+  margin-right: .5%;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.image_list>li>:nth-child(3n) {
+  margin-right: 0;
+}
+
+.image_list>li>img {
+  width: 100%;
+  height: 166px;
+}
+
+.image_list>li>span {
+  position: absolute;
+  top: -100%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  color: #FFF;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 166px;
+  transition: all .3s;
+  background-color: rgba(0, 0, 0, .4);
+  overflow: hidden;
+}
+
+.image_list>li:hover>span {
+  top: 0;
 }

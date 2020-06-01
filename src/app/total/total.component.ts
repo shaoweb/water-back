@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UploadFile } from 'ng-zorro-antd/upload';
+import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { RequestService } from '../request.service';
 import { APIROUTER, ClusterThe } from '../mock.api';
+import { resolve } from 'url';
 
 @Component({
   selector: 'app-total',
@@ -23,6 +25,15 @@ export class TotalComponent implements OnInit {
 
   // 查询参数
   parameter: any = { 'page': 1, 'count': 10 };
+  values: string[] | null = null;
+  levelThree: any = {};
+
+  // 当前选中的数据,某个项目的详情
+  currentData: any = {};
+  projectInformation: any = {};
+
+  // 省市区
+  provinceCityArea: any = {};
 
   // 下拉列表
   can: any = ['A类', 'B类', 'C类'];
@@ -58,9 +69,8 @@ export class TotalComponent implements OnInit {
   securityCheck: boolean = false;
   securitycheckModle: boolean = false;
   customModify: boolean = false;
-
-  // 当前选中的数据
-  currentData: any = {};
+  imagesDelect: boolean = false;
+  projectModify: boolean = false;
 
   // 查询到安全检测的的值
   securityData: any;
@@ -87,10 +97,40 @@ export class TotalComponent implements OnInit {
       this.message.create('error', error);
     })
 
+    // 查询行政区
+    this.req.getData(this.routerApi.getArea).subscribe(res => {
+      this.levelThree['province'] = res['data'];
+    }, error => {
+      this.message.create('error', error);
+    })
+
     // 默认回调
     this.total(this.parameter);
 
   }
+
+  // 选择地区
+  onChanges(values: string[]): void {
+    console.log(values);
+  };
+
+  // 点击查询市区
+  onExpandChange(currentId: any): void {
+    this.req.getData(this.routerApi.getArea, { 'parentId': currentId }).subscribe(res => {
+      this.levelThree.city = res['data'];
+    }, error => {
+      this.message.create('error', error);
+    })
+  };
+
+  // 点击查询县级
+  onChangeCounty(currentId: any): void {
+    this.req.getData(this.routerApi.getArea, { 'parentId': currentId }).subscribe(res => {
+      this.levelThree.area = res['data'];
+    }, error => {
+      this.message.create('error', error);
+    })
+  };
 
   // 查询所有数据
   total(data: any): void {
@@ -103,6 +143,16 @@ export class TotalComponent implements OnInit {
     }, error => {
       this.message.create('error', `${error}`);
     })
+  };
+
+  // 条件查询
+  searchAll(): void {
+    this.currentData = {};
+    this.parameter.page = 1;
+    this.parameter.count = 10;
+    this.parameter.areasId = this.provinceCityArea.area | this.provinceCityArea.city | this.provinceCityArea.province;
+    this.parameter.buildTime = this.clusterThe.currentDate(this.parameter.buildTime, 'yyyy-MM-dd');
+    this.total(this.parameter);
   };
 
   // 筛选出工程类型的名字
@@ -130,39 +180,50 @@ export class TotalComponent implements OnInit {
   };
 
   // 弹框选择
-  modalSelect(item: any, type: any): void {
-    switch (type) {
-      case 0:
-        this.informationModle = true;
-        this.currentData = item;
-        break;
-      case 1:
-        this.statusquoAdd = true;
-        this.statusParameter['wcpId'] = item['id'];
-        break;
-      case 2:
-        this.dangerAdd = true;
-        this.dangerParameter['proId'] = item['id'];
-        break;
-      case 3:
-        this.strengtheningAdd = true;
-        break;
-      case 4:
-        this.inspectionAdd = true;
-        this.inspectionParameter['wcpId'] = item['id'];
-        break;
-      case 5:
-        this.securityCheck = true;
-        this.securitycheckPar['wcpId'] = item['id'];
-        break;
-      case 6:
-        this.securitycheckModle = true;
-        this.securitySearch(item['id']);
-        break;
-      case 7:
-        this.customModify = true;
-        this.currentData = item;
-        break;
+  modalSelect(type: any, data?: any): void {
+    data ? this.currentData = data : null;
+    if (this.currentData.id) {
+      switch (type) {
+        case 0:
+          this.informationModle = true;
+          break;
+        case 1:
+          this.statusquoAdd = true;
+          this.statusParameter['wcpId'] = this.currentData['id'];
+          break;
+        case 2:
+          this.dangerAdd = true;
+          this.dangerParameter['proId'] = this.currentData['id'];
+          break;
+        case 3:
+          this.strengtheningAdd = true;
+          break;
+        case 4:
+          this.inspectionAdd = true;
+          this.inspectionParameter['wcpId'] = this.currentData['id'];
+          break;
+        case 5:
+          this.securityCheck = true;
+          this.securitycheckPar['wcpId'] = this.currentData['id'];
+          break;
+        case 6:
+          this.securitycheckModle = true;
+          this.securitySearch(this.currentData['id']);
+          break;
+        case 7:
+          this.customModify = true;
+          break;
+        case 8:
+          this.imagesDelect = true;
+          this.information(this.currentData.id);
+          break;
+        case 9:
+          this.projectModify = true;
+          this.information(data.id);
+          break;
+      }
+    } else {
+      this.message.create("warning", "请选择要操作的数据")
     }
   };
 
@@ -265,6 +326,15 @@ export class TotalComponent implements OnInit {
     })
   };
 
+  // 查询详情
+  information(projectId: string): void {
+    this.req.postData(this.routerApi.getProject, { 'id': projectId }).subscribe(res => {
+      this.projectInformation = res['data'];
+    }, error => {
+      this.message.create('error', error);
+    })
+  }
+
   // 图片选中回调
   handlePreview = (file: UploadFile) => {
     this.previewImage = file.url || file.thumbUrl;
@@ -284,6 +354,17 @@ export class TotalComponent implements OnInit {
     this.currentData.img = arr.join(',');
     this.req.postData(this.routerApi.updateProject, this.currentData).subscribe(res => {
       this.customModify = false;
+      this.message.create('success', '操作成功');
+    }, error => {
+      this.message.create('error', error);
+    })
+  };
+
+  // 删除图片
+  delectImage(url: string, pid: string): void {
+    this.req.getData(this.routerApi.deleteImg, { 'img': url, 'pid': pid }).subscribe(res => {
+      let index = this.projectInformation.imgs.indexOf(url);
+      this.projectInformation.imgs.splice(index, 1);
       this.message.create('success', '操作成功');
     }, error => {
       this.message.create('error', error);
