@@ -1,4 +1,4 @@
-<h3>基本信息填写 
+<h3>基本信息填写
   <nz-upload class="fr" [nzAction]="routerApi.importPro" nzName='proExcel' (nzChange)="uploadChang($event)">
     <button nz-button><i nz-icon nzType="upload"></i><span>Excel模板上传</span></button>
   </nz-upload>
@@ -22,14 +22,109 @@
     </div>
     <div nz-col class="gutter-row" nzSpan="6">
       <div class="gutter-box">
-        <span><i class="red">*</i>工程等级:</span>
-        <nz-select [(ngModel)]="data.rank" nzAllowClear nzPlaceHolder="请选择工程等级">
+        <span><i class="red">*</i>工程等别:</span>
+        <nz-select [(ngModel)]="data.rank" nzAllowClear nzPlaceHolder="请选择工程等别">
           <nz-option nzValue="Ⅰ" nzLabel="I"></nz-option>
           <nz-option nzValue="Ⅱ" nzLabel="II"></nz-option>
           <nz-option nzValue="Ⅲ" nzLabel="III"></nz-option>
           <nz-option nzValue="Ⅳ" nzLabel="IV"></nz-option>
           <nz-option nzValue="Ⅴ" nzLabel="V"></nz-option>
         </nz-select>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>当前安全评价:</span>
+        <nz-select [(ngModel)]="data.level" nzAllowClear nzPlaceHolder="当前安全评价">
+          <nz-option nzValue="一类" nzLabel="一类"></nz-option>
+          <nz-option nzValue="二类" nzLabel="二类"></nz-option>
+          <nz-option nzValue="三类" nzLabel="三类"></nz-option>
+          <nz-option nzValue="四类" nzLabel="四类"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+  </div>
+  <div nz-row nzGutter="16">
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>项目状态:</span>
+        <nz-select [(ngModel)]="data.status" nzAllowClear nzPlaceHolder="请选择项目状态">
+          <nz-option [nzValue]="0" nzLabel="在建"></nz-option>
+          <nz-option [nzValue]="1" nzLabel="完工"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>建造时间:</span>
+        <nz-input-group [ngStyle]="{'width': '200px'}" [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="格式：2019-01" [(ngModel)]="data.buildTime" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i [ngStyle]="{'color': '#DEDEDE'}" nz-icon nzType="calendar"></i>
+        </ng-template>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>间隔时间:</span>
+        <nz-input-number [(ngModel)]="data.time" [nzMin]="1" [nzStep]="2"></nz-input-number>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>除险重建时间:</span>
+        <nz-input-group [ngStyle]="{'width': '200px'}" [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="格式：2019-01" [(ngModel)]="data.rebuildTime" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i [ngStyle]="{'color': '#DEDEDE'}" nz-icon nzType="calendar"></i>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div nz-row nzGutter="16">
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>设计流量:</span>
+        <nz-input-number [(ngModel)]="data.flow" [nzMin]="1" [nzStep]="1"></nz-input-number>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>经度坐标:</span>
+        <input nz-input placeholder="请输入百度经度坐标" [(ngModel)]="data.lng" />
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>纬度坐标:</span>
+        <input nz-input placeholder="请输入百度纬度坐标" [(ngModel)]="data.lat" />
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>拆除重建时间:</span>
+        <nz-input-group [ngStyle]="{'width': '200px'}" [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="格式：2019-01" [(ngModel)]="data.rmDangerTime" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i [ngStyle]="{'color': '#DEDEDE'}" nz-icon nzType="calendar"></i>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div nz-row nzGutter="16">
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>工程概况:</span>
+        <input nz-input placeholder="请输入工程概况" [(ngModel)]="data.overview" />
+      </div>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <div class="gutter-box">
+        <span><i class="red">*</i>检测单位:</span>
+        <input nz-input placeholder="请输入检测单位" [(ngModel)]="data.unit" />
       </div>
     </div>
     <div nz-col class="gutter-row" nzSpan="6">
@@ -45,87 +140,6 @@
       </div>
     </div>
   </div>
-  <div nz-row nzGutter="16">
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>工程类别:</span>
-        <nz-select [(ngModel)]="data.level" nzAllowClear nzPlaceHolder="工程类型">
-          <nz-option nzValue="一类" nzLabel="一类"></nz-option>
-          <nz-option nzValue="二类" nzLabel="二类"></nz-option>
-          <nz-option nzValue="三类" nzLabel="三类"></nz-option>
-          <nz-option nzValue="四类" nzLabel="四类"></nz-option>
-        </nz-select>
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>建造时间:</span>
-        <nz-date-picker [nzStyle]="{'width': '200px'}" [(ngModel)]="buildTime">
-        </nz-date-picker>
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>间隔时间:</span>
-        <nz-input-number [(ngModel)]="data.time" [nzMin]="1" [nzStep]="2"></nz-input-number>
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>检测单位:</span>
-        <input nz-input placeholder="请输入检测单位" [(ngModel)]="data.unit" />
-      </div>
-    </div>
-  </div>
-  <div nz-row nzGutter="16">
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>设计流量:</span>
-        <nz-input-number [(ngModel)]="data.flow" [nzMin]="1" [nzStep]="1"></nz-input-number>
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>省份位置:</span>
-        <nz-select [(ngModel)]="currentProvince" nzAllowClear nzPlaceHolder="请选择省份" (ngModelChange)="onExpandChange(currentProvince)">
-          <nz-option *ngFor="let item of levelThree.province" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
-        </nz-select>
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red"> </i>市区位置:</span>
-        <nz-select [(ngModel)]="currentCity" nzAllowClear nzPlaceHolder="请选择市区位置" (ngModelChange)="onChangeCounty(currentCity)">
-          <nz-option *ngFor="let item of levelThree.cityThe" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
-        </nz-select>
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red"> </i>县城位置:</span>
-        <nz-select [(ngModel)]="currentCounty" nzAllowClear nzPlaceHolder="请选择县城位置">
-          <nz-option *ngFor="let item of levelThree.county" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
-        </nz-select>
-      </div>
-    </div>
-  </div>
-  <div nz-row nzGutter="16">
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>工程概况:</span>
-        <input nz-input placeholder="请输入工程概况" [(ngModel)]="data.overview" />
-      </div>
-    </div>
-    <div nz-col class="gutter-row" nzSpan="6">
-      <div class="gutter-box">
-        <span><i class="red">*</i>项目状态:</span>
-        <nz-select [(ngModel)]="data.status" nzAllowClear nzPlaceHolder="请选择项目状态">
-          <nz-option [nzValue]="0" nzLabel="在建"></nz-option>
-          <nz-option [nzValue]="1" nzLabel="完工"></nz-option>
-        </nz-select>
-      </div>
-    </div>
-  </div>
 </div>
 <!-- 历次维修加固信息 -->
 <h3>历次维修加固信息 <i nz-icon nzType="plus-square" nzTheme="outline" (click)="paremeterAdd(1)"></i></h3>
@@ -134,7 +148,7 @@
     <thead>
       <tr>
         <th [ngStyle]="{'width':'46px'}">序号</th>
-        <th [ngStyle]="{'width':'190px'}">维修/加固时间</th>
+        <th [ngStyle]="{'width':'200px'}">维修/加固时间</th>
         <th>维修/加固原因</th>
         <th [ngStyle]="{'width':'46px'}">操作</th>
       </tr>
@@ -142,10 +156,17 @@
     <tbody>
       <tr *ngFor="let data of data.ms; let i = index;">
         <td>{{i+1}}</td>
-        <td><nz-date-picker [nzStyle]="{'width': '180px'}" [(ngModel)]="data.date"></nz-date-picker></td>
+        <td>
+          <nz-input-group [nzSuffix]="suffixIconSearch">
+            <input type="text" nz-input placeholder="格式：2019-01" [(ngModel)]="data.date" />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <i [ngStyle]="{'color': '#DEDEDE'}" nz-icon nzType="calendar"></i>
+          </ng-template>
+        </td>
         <td><input placeholder="请输入维修/加固原因" [(ngModel)]="data.reason" /></td>
-        <td><i nz-icon [nzType]="'delete'" nz-tooltip nzTooltipTitle="删除" nz-popconfirm
-          nzTitle="是否删除这条数据?" (nzOnConfirm)="parementerRemove(1,i)"></i></td>
+        <td><i nz-icon [nzType]="'delete'" nz-tooltip nzTooltipTitle="删除" nz-popconfirm nzTitle="是否删除这条数据?"
+            (nzOnConfirm)="parementerRemove(1,i)"></i></td>
       </tr>
     </tbody>
   </table>
@@ -157,7 +178,7 @@
     <thead>
       <tr>
         <th [ngStyle]="{'width':'46px'}">序号</th>
-        <th [ngStyle]="{'width':'190px'}">险情时间</th>
+        <th [ngStyle]="{'width':'200px'}">险情时间</th>
         <th>险情内容</th>
         <th [ngStyle]="{'width':'46px'}">操作</th>
       </tr>
@@ -165,10 +186,17 @@
     <tbody>
       <tr *ngFor="let data of data.ds; let i = index;">
         <td>{{i+1}}</td>
-        <td><nz-date-picker [nzStyle]="{'width': '180px'}" [(ngModel)]="data.date"></nz-date-picker></td>
+        <td>
+          <nz-input-group [nzSuffix]="suffixIconSearch">
+            <input type="text" nz-input placeholder="格式：2019-01" [(ngModel)]="data.date" />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <i [ngStyle]="{'color': '#DEDEDE'}" nz-icon nzType="calendar"></i>
+          </ng-template>
+        </td>
         <td><input placeholder="请输入险情内容" [(ngModel)]="data.content" /></td>
-        <td><i nz-icon [nzType]="'delete'" nz-tooltip nzTooltipTitle="删除" nz-popconfirm
-          nzTitle="是否删除这条数据?" (nzOnConfirm)="parementerRemove(2,i)"></i></td>
+        <td><i nz-icon [nzType]="'delete'" nz-tooltip nzTooltipTitle="删除" nz-popconfirm nzTitle="是否删除这条数据?"
+            (nzOnConfirm)="parementerRemove(2,i)"></i></td>
       </tr>
     </tbody>
   </table>

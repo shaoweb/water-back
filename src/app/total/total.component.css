@@ -4,7 +4,8 @@ tbody>tr {
 }
 
 .paremter_list,
-.information_box {
+.information_box,
+.information_three {
   overflow: hidden;
 }
 
@@ -13,21 +14,36 @@ tbody>tr {
   width: 50%;
 }
 
+.information_three>li {
+  float: left;
+  width: 33%;
+  margin-right: .5%;
+}
+
+.information_three>li:nth-child(3n) {
+  margin-right: 0;
+}
+
 .paremter_list>li,
-.information_box>li {
+.information_box>li,
+.information_three>li {
   margin-bottom: 12px;
   overflow: hidden;
 }
 
 .paremter_list>li>span,
-.information_box>li>span {
+.information_box>li>span,
+.information_three>li>span {
   display: inline-block;
   margin-right: 8px;
 }
 
 .information_box>li>input,
 .information_box>li>nz-select,
-.information_box>li>nz-input-number {
+.information_box>li>nz-input-number,
+.information_three>li>input,
+.information_three>li>nz-select,
+.information_three>li>nz-input-number {
   width: 200px;
 }
 
@@ -63,6 +79,7 @@ tbody>tr {
 
 .buton_box>li {
   margin-right: 8px;
+  margin-bottom: 12px;
 }
 
 tbody>.select {
@@ -90,7 +107,8 @@ tbody>.select {
   margin-right: 0;
 }
 
-.image_list>li>img {
+.image_list>li>img,
+.image_list>li>video {
   width: 100%;
   height: 166px;
 }

@@ -74,9 +74,7 @@ export class RequestService {
         // 当code为0时
         if (thisData['code'] == 0) {
             res = thisData; // 给最终值赋值
-        } else if(thisData['code'] == 400){
-            this.message.create('warning','请将必填项填写完整')
-        }else{
+        } else {
             // 当status不为200时
             let err = thisData['message'];  // 错误信息
             throw new Error(err);  // 抛出错误

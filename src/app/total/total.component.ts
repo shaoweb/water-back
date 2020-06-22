@@ -37,19 +37,19 @@ export class TotalComponent implements OnInit {
 
   // 下拉列表
   can: any = ['A类', 'B类', 'C类'];
-  describe: any = ['规范', '较规范', '不规范', '有', '无'];
   partSite: any = {
-    '上游连接段': ['护坡', '海漫', '两岸翼墙', '护坦', '消力池', '防冲槽'],
-    '下游连接段': ['翼墙', '铺盖', '护底', '防冲槽', '护坡'],
+    '上游连接段': ['上游护坡', '海漫', '两岸翼墙', '护坦', '消力池', '上游防冲槽'],
+    '下游连接段': ['翼墙', '铺盖', '护底', '下游防冲槽', '下游护坡'],
     '闸室': ['交通桥', '闸门', '底板', '闸墩', '启闭机', '工作桥', '胸墙']
   }
 
-  // 工程现状新增参数，工程险情新增参数，工程修改/加固新增参数，安全监测新增参数，安全复核新增参数
+  // 工程现状新增参数，工程险情新增参数，工程修改/加固新增参数，安全监测新增参数，安全复核新增参数，工程档案新增参数
   statusParameter: any = { 'type': '现状调查' };
   dangerParameter: any = {};
   strengtheningPar: any = {};
   inspectionParameter: any = {};
   securitycheckPar: any = { 'type': '安全复核' };
+  archivesParameter: any = {};
 
   // 总数据
   totalData: any;
@@ -71,14 +71,17 @@ export class TotalComponent implements OnInit {
   customModify: boolean = false;
   imagesDelect: boolean = false;
   projectModify: boolean = false;
+  videoAddmodify: boolean = false;
+  archivesAdd: boolean = false;
 
   // 查询到安全检测的的值
   securityData: any;
 
-  // 接收上传的图片的数据
+  // 接收上传的图片的数据，接收上传的视频的数据
   fileList = [];
+  videoList = [];
 
-  // 上传图片的参数配置
+  // 上传图片/视频的参数配置
   showUploadList = {
     showPreviewIcon: true,
     showRemoveIcon: true,
@@ -221,6 +224,12 @@ export class TotalComponent implements OnInit {
           this.projectModify = true;
           this.information(data.id);
           break;
+        case 10:
+          this.videoAddmodify = true;
+          break;
+        case 11:
+          this.archivesAdd = true;
+          break;
       }
     } else {
       this.message.create("warning", "请选择要操作的数据")
@@ -230,18 +239,42 @@ export class TotalComponent implements OnInit {
   // 工程现状新增
   statusquoSubmit(): void {
     this.statusquoAdd = false;
+    let describe = [];
     switch (this.statusParameter.value) {
       case '有':
         this.statusParameter.value = true;
+        describe = ['有', '无'];
+        this.statusParameter.describe = describe.join('、');
         break;
       case '无':
         this.statusParameter.value = false;
+        describe = ['有', '无'];
+        this.statusParameter.describe = describe.join('、');
+        break;
+      case 'A级':
+        this.statusParameter.value = false;
+        describe = ['A级', 'B级', 'C级'];
+        this.statusParameter.describe = describe.join('、');
+        this.statusParameter.value = this.statusParameter.value;
+        break;
+      case 'B级':
+        this.statusParameter.value = false;
+        describe = ['A级', 'B级', 'C级'];
+        this.statusParameter.describe = describe.join('、');
+        this.statusParameter.value = this.statusParameter.value;
+        break;
+      case 'C级':
+        this.statusParameter.value = false;
+        describe = ['A级', 'B级', 'C级'];
+        this.statusParameter.describe = describe.join('、');
+        this.statusParameter.value = this.statusParameter.value;
         break;
       default:
+        describe = ['规范', '较规范', '不规范'];
+        this.statusParameter.describe = describe.join('、');
         this.statusParameter.value = this.statusParameter.value;
         break;
     };
-    this.statusParameter.describe = this.describe.join('、');
     this.req.postData(this.routerApi.addPara, this.statusParameter).subscribe(res => {
       if (res['count'] == 0) {
         this.message.create('success', '操作成功');
@@ -281,11 +314,8 @@ export class TotalComponent implements OnInit {
   // 编辑
   editorSumbit(): void {
     this.informationModle = false;
-    this.currentData.buildTime = this.clusterThe.currentDate(this.currentData.buildTime, 'yyyy-MM-dd');
     this.req.postData(this.routerApi.updateProject, this.currentData).subscribe(res => {
-      if (res['count'] == 0) {
-        this.message.create('success', '操作成功');
-      }
+      this.message.create('success', '操作成功');
     }, error => {
       this.message.create('error', error);
     })
@@ -319,7 +349,6 @@ export class TotalComponent implements OnInit {
   // 查询安全检测
   securitySearch(id: any): void {
     this.req.getData(this.routerApi.getStruValue, { 'wcpId': id }).subscribe(res => {
-      console.log(res);
       this.securityData = res['data'];
     }, error => {
       this.message.create('error', error);
@@ -330,6 +359,7 @@ export class TotalComponent implements OnInit {
   information(projectId: string): void {
     this.req.postData(this.routerApi.getProject, { 'id': projectId }).subscribe(res => {
       this.projectInformation = res['data'];
+      console.log(this.projectInformation);
     }, error => {
       this.message.create('error', error);
     })
@@ -366,6 +396,37 @@ export class TotalComponent implements OnInit {
       let index = this.projectInformation.imgs.indexOf(url);
       this.projectInformation.imgs.splice(index, 1);
       this.message.create('success', '操作成功');
+    }, error => {
+      this.message.create('error', error);
+    })
+  };
+
+  // 上传视频
+  videoAddSubmit(): void {
+    // 遍历视频的地址
+    let arr = [];
+    this.videoList.forEach(item => {
+      if (item['response']) {
+        let imgUrl = item['response']['data'].split('wcpimg');
+        arr.push('/wcpimg' + imgUrl[1]);
+      }
+    })
+    this.currentData.video = arr.join(',');
+    this.req.postData(this.routerApi.updateProject, this.currentData).subscribe(res => {
+      this.videoAddmodify = false;
+      this.message.create('success', '操作成功');
+    }, error => {
+      this.message.create('error', error);
+    })
+  };
+
+  // 工程档案新增
+  archiveSumbit(): void {
+    let data = { 'title': this.archivesParameter.title, 'content': this.archivesParameter.content, 'state': 4, 'pid': this.currentData.id};
+    this.req.postData(this.routerApi.addRecord, data).subscribe(res => {
+      this.archivesAdd = false;
+      this.archivesParameter = {};
+      this.message.create('success', '添加成功');
     }, error => {
       this.message.create('error', error);
     })

@@ -1,10 +1,11 @@
 // http://58.246.211.154:14200/wcp/
 const API = 'http://58.246.211.154:14200/wcp/';
-// const API = 'http://192.168.1.136:8080/wcp/';
+// const API = 'http://192.168.1.117:8088/wcp/';
 
 export const APIROUTER = {
     login: API + 'user/login', //登录
     uploadImg: API + 'pro/uploadImg', //图片上传
+    uploadVideo: API + 'pro/uploadVideo', //视频上传
     getProject: API + 'pro/getProject', //查询某个项目的详细信息
     getProjects: API + 'pro/getProjects', //查询所有工程
     addProject: API + 'pro/addProject', //添加工程信息
@@ -20,6 +21,7 @@ export const APIROUTER = {
     exportPro: API + 'excel/exportPro', //excel模板下载
     importPro: API + 'excel/importPro', //excel模板导入
     deleteImg: API + 'pro/deleteImg', //图片删除
+    addRecord: API + 'record/addRecord', //行业新闻，系统通知，标准规范，工程档案新增
 }
 
 // 公用方法配置
