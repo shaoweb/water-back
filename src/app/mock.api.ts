@@ -22,6 +22,9 @@ export const APIROUTER = {
     importPro: API + 'excel/importPro', //excel模板导入
     deleteImg: API + 'pro/deleteImg', //图片删除
     addRecord: API + 'record/addRecord', //行业新闻，系统通知，标准规范，工程档案新增
+    getParamVal: API + 'para/getParamVal', // 现状调查查询
+    updParam: API + 'para/updParam', // 现状调查修改
+    deleteparamVal: API + 'para/deleteparamVal', // 现状调查删除
 }
 
 // 公用方法配置

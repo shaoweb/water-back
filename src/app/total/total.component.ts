@@ -43,13 +43,24 @@ export class TotalComponent implements OnInit {
     '闸室': ['交通桥', '闸门', '底板', '闸墩', '启闭机', '工作桥', '胸墙']
   }
 
-  // 工程现状新增参数，工程险情新增参数，工程修改/加固新增参数，安全监测新增参数，安全复核新增参数，工程档案新增参数
+  /**
+   * 工程现状新增参数，
+   * 工程险情新增参数，
+   * 工程修改/加固新增参数，
+   * 安全监测新增参数，
+   * 安全复核新增参数，
+   * 工程档案新增参数，
+   * 现状调查查询，
+   * 查询到安全检测的的值
+  */
   statusParameter: any = { 'type': '现状调查' };
   dangerParameter: any = {};
   strengtheningPar: any = {};
   inspectionParameter: any = {};
   securitycheckPar: any = { 'type': '安全复核' };
   archivesParameter: any = {};
+  statusqoAlldata: any;
+  securityData: any;
 
   // 总数据
   totalData: any;
@@ -73,9 +84,7 @@ export class TotalComponent implements OnInit {
   projectModify: boolean = false;
   videoAddmodify: boolean = false;
   archivesAdd: boolean = false;
-
-  // 查询到安全检测的的值
-  securityData: any;
+  statusqoSearch: boolean = false;
 
   // 接收上传的图片的数据，接收上传的视频的数据
   fileList = [];
@@ -111,11 +120,6 @@ export class TotalComponent implements OnInit {
     this.total(this.parameter);
 
   }
-
-  // 选择地区
-  onChanges(values: string[]): void {
-    console.log(values);
-  };
 
   // 点击查询市区
   onExpandChange(currentId: any): void {
@@ -230,13 +234,17 @@ export class TotalComponent implements OnInit {
         case 11:
           this.archivesAdd = true;
           break;
+        case 12:
+          this.statusqoSearch = true;
+          this.getParamVal(this.currentData.id); // 根据ID查询现状调查的数据
+          break;
       }
     } else {
       this.message.create("warning", "请选择要操作的数据")
     }
   };
 
-  // 工程现状新增
+  // 现状调查新增
   statusquoSubmit(): void {
     this.statusquoAdd = false;
     let describe = [];
@@ -252,22 +260,16 @@ export class TotalComponent implements OnInit {
         this.statusParameter.describe = describe.join('、');
         break;
       case 'A级':
-        this.statusParameter.value = false;
         describe = ['A级', 'B级', 'C级'];
         this.statusParameter.describe = describe.join('、');
-        this.statusParameter.value = this.statusParameter.value;
         break;
       case 'B级':
-        this.statusParameter.value = false;
         describe = ['A级', 'B级', 'C级'];
         this.statusParameter.describe = describe.join('、');
-        this.statusParameter.value = this.statusParameter.value;
         break;
       case 'C级':
-        this.statusParameter.value = false;
         describe = ['A级', 'B级', 'C级'];
         this.statusParameter.describe = describe.join('、');
-        this.statusParameter.value = this.statusParameter.value;
         break;
       default:
         describe = ['规范', '较规范', '不规范'];
@@ -276,9 +278,7 @@ export class TotalComponent implements OnInit {
         break;
     };
     this.req.postData(this.routerApi.addPara, this.statusParameter).subscribe(res => {
-      if (res['count'] == 0) {
-        this.message.create('success', '操作成功');
-      }
+      this.message.create('success', '操作成功');
     }, error => {
       this.message.create('error', error)
     })
@@ -333,6 +333,16 @@ export class TotalComponent implements OnInit {
     })
   };
 
+  // 安全检测编辑
+  inspectionseditSumbit(data: any): void {
+    this.req.postData(this.routerApi.addStru, data).subscribe(res => {
+      data.disabled = true;
+      this.message.create('success', '操作成功');
+    }, error => {
+      this.message.create('error', error);
+    })
+  };
+
   // 安全复核新增
   securitycheckSumbit(): void {
     this.securityCheck = false;
@@ -349,6 +359,9 @@ export class TotalComponent implements OnInit {
   // 查询安全检测
   securitySearch(id: any): void {
     this.req.getData(this.routerApi.getStruValue, { 'wcpId': id }).subscribe(res => {
+      for (let item in res['data']) {
+        res['data'][item]['disabled'] = true;
+      }
       this.securityData = res['data'];
     }, error => {
       this.message.create('error', error);
@@ -422,13 +435,75 @@ export class TotalComponent implements OnInit {
 
   // 工程档案新增
   archiveSumbit(): void {
-    let data = { 'title': this.archivesParameter.title, 'content': this.archivesParameter.content, 'state': 4, 'pid': this.currentData.id};
+    let data = { 'title': this.archivesParameter.title, 'content': this.archivesParameter.content, 'state': 4, 'pid': this.currentData.id };
     this.req.postData(this.routerApi.addRecord, data).subscribe(res => {
       this.archivesAdd = false;
       this.archivesParameter = {};
       this.message.create('success', '添加成功');
     }, error => {
       this.message.create('error', error);
+    })
+  };
+
+  // 现状调查查询
+  getParamVal(wcpid: string): void{
+    this.req.getData(this.routerApi.getParamVal, {'wcpid': wcpid}).subscribe(res=>{
+      for (let item in res['data']) {
+        res['data'][item]['disabled'] = true;
+      }
+      this.statusqoAlldata = res['data'];
+    }, error=>{
+      this.message.create('error', error);
+    })
+  };
+
+  // 现状调查修改
+  updParam(data: any): void{
+    let describe = [];
+    let parement = {'can': data.can, 'con': data.con, 'year': data.year, 'value': data.value, 'id': data.id, 'type': data.type, 'wcp_id': data.wcp_id, 'pmtValueId': data.pmtValueId};
+    switch (data.value) {
+      case '有':
+        parement['value'] = true;
+        describe = ['有', '无'];
+        parement['describe'] = describe.join('、');
+        break;
+      case '无':
+        parement['value'] = false;
+        describe = ['有', '无'];
+        parement['describe'] = describe.join('、');
+        break;
+      case 'A级':
+        describe = ['A级', 'B级', 'C级'];
+        parement['describe'] = describe.join('、');
+        break;
+      case 'B级':
+        describe = ['A级', 'B级', 'C级'];
+        parement['describe'] = describe.join('、');
+        break;
+      case 'C级':
+        describe = ['A级', 'B级', 'C级'];
+        parement['describe'] = describe.join('、');
+        break;
+      default:
+        describe = ['规范', '较规范', '不规范'];
+        parement['describe'] = describe.join('、');
+        break;
+    };
+    this.req.postData(this.routerApi.updParam, parement).subscribe(res=>{
+      data.disabled = true;
+      this.message.create('success', '修改成功');
+    }, error=>{
+      this.message.create('error', error);
+    })
+  };
+
+  // 现状调查删除
+  delectlocation(dataId: string): void{
+    this.req.getData(this.routerApi.deleteparamVal, {'id': dataId}).subscribe(res=>{
+      this.statusqoAlldata = this.statusqoAlldata.filter(element => element.id !== dataId);
+      this.message.create('success', '删除成功');
+    }, error=>{
+      this.message.create('error', error)
     })
   };
 

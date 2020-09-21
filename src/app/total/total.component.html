@@ -60,11 +60,9 @@
         <button nz-button nzType="primary" (click)="searchAll()">查询</button>
     </div>
 </div>
+
 <!-- 操作 -->
 <ul class="clearfix buton_box">
-    <li class="fl">
-        <button nz-button nzType="default" (click)="modalSelect(1)">工程现状新增</button>
-    </li>
     <li class="fl">
         <button nz-button nzType="default" (click)="modalSelect(2)">工程险情新增</button>
     </li>
@@ -75,10 +73,16 @@
         <button nz-button nzType="default" (click)="modalSelect(3)">工程修改/加固新增</button>
     </li>
     <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(1)">现状调查新增</button>
+    </li>
+    <li class="fl">
         <button nz-button nzType="default" (click)="modalSelect(4)">安全检测新增</button>
     </li>
     <li class="fl">
         <button nz-button nzType="default" (click)="modalSelect(5)">安全复核新增</button>
+    </li>
+    <li class="fl">
+        <button nz-button nzType="default" (click)="modalSelect(12)">现状调查查询</button>
     </li>
     <li class="fl">
         <button nz-button nzType="default" (click)="modalSelect(6)">安全检测查询</button>
@@ -93,6 +97,7 @@
         <button nz-button nzType="default" (click)="modalSelect(10)">视频上传</button>
     </li>
 </ul>
+
 <!-- 数据展示 -->
 <nz-table #basicTable nzSize="middle" [nzData]="totalData" [nzShowSizeChanger]="true" [nzFrontPagination]="false"
     [nzPageSize]="parameter.count" [nzPageIndex]="parameter.page" [nzTotal]="totalItems"
@@ -140,6 +145,7 @@
         </tr>
     </tbody>
 </nz-table>
+
 <!-- 基本信息编辑 -->
 <nz-modal nzWidth="800px" [(nzVisible)]="informationModle" nzTitle="基本信息编辑" (nzOnCancel)="informationModle=false"
     (nzOnOk)="editorSumbit()">
@@ -228,8 +234,9 @@
         </li>
     </ul>
 </nz-modal>
-<!-- 工程现状新增 -->
-<nz-modal [(nzVisible)]="statusquoAdd" nzTitle="工程现状新增" (nzOnCancel)="statusquoAdd=false" (nzOnOk)="statusquoSubmit()">
+
+<!-- 现状调查新增 -->
+<nz-modal [(nzVisible)]="statusquoAdd" nzTitle="现状调查新增" (nzOnCancel)="statusquoAdd=false" (nzOnOk)="statusquoSubmit()">
     <ul class="paremter_list">
         <li>
             <span><i class="red">*</i>工程名称</span>
@@ -246,7 +253,8 @@
         </li>
         <li>
             <span><i class="red">*</i>工程设施</span>
-            <nz-select [ngStyle]="{'width': '100%'}" [(ngModel)]="statusParameter.con" nzAllowClear nzPlaceHolder="工程设施">
+            <nz-select [ngStyle]="{'width': '100%'}" [(ngModel)]="statusParameter.con" nzAllowClear
+                nzPlaceHolder="工程设施">
                 <nz-option nzValue="土工建筑物" nzLabel="土工建筑物"></nz-option>
                 <nz-option nzValue="石工建筑物" nzLabel="石工建筑物"></nz-option>
                 <nz-option nzValue="混凝土建筑物" nzLabel="混凝土建筑物"></nz-option>
@@ -258,20 +266,23 @@
         </li>
         <li *ngIf="statusParameter.con">
             <span><i class="red">*</i>对应参数</span>
-            <nz-select *ngIf="statusParameter.con == '混凝土建筑物'" [ngStyle]="{'width': '100%'}" [(ngModel)]="statusParameter.can" nzAllowClear nzPlaceHolder="对应参数">
+            <nz-select *ngIf="statusParameter.con == '混凝土建筑物'" [ngStyle]="{'width': '100%'}"
+                [(ngModel)]="statusParameter.can" nzAllowClear nzPlaceHolder="对应参数">
                 <nz-option nzValue="结构裂缝" nzLabel="结构裂缝"></nz-option>
                 <nz-option nzValue="锈胀裂缝" nzLabel="锈胀裂缝"></nz-option>
                 <nz-option nzValue="空鼓露筋" nzLabel="空鼓露筋"></nz-option>
                 <nz-option nzValue="边角破损" nzLabel="边角破损"></nz-option>
                 <nz-option nzValue="质量缺陷" nzLabel="质量缺陷"></nz-option>
             </nz-select>
-            <nz-select *ngIf="statusParameter.con == '金属结构'" [ngStyle]="{'width': '100%'}" [(ngModel)]="statusParameter.can" nzAllowClear nzPlaceHolder="对应参数">
+            <nz-select *ngIf="statusParameter.con == '金属结构'" [ngStyle]="{'width': '100%'}"
+                [(ngModel)]="statusParameter.can" nzAllowClear nzPlaceHolder="对应参数">
                 <nz-option nzValue="锈蚀" nzLabel="锈蚀"></nz-option>
                 <nz-option nzValue="弯曲" nzLabel="弯曲"></nz-option>
                 <nz-option nzValue="安装件缺失" nzLabel="安装件缺失"></nz-option>
                 <nz-option nzValue="破损" nzLabel="破损"></nz-option>
             </nz-select>
-            <nz-select *ngIf="statusParameter.con == '工程管理'" [ngStyle]="{'width': '100%'}" [(ngModel)]="statusParameter.can" nzAllowClear nzPlaceHolder="对应参数">
+            <nz-select *ngIf="statusParameter.con == '工程管理'" [ngStyle]="{'width': '100%'}"
+                [(ngModel)]="statusParameter.can" nzAllowClear nzPlaceHolder="对应参数">
                 <nz-option nzValue="管理体制" nzLabel="管理体制"></nz-option>
                 <nz-option nzValue="管理机构设置" nzLabel="管理机构设置"></nz-option>
                 <nz-option nzValue="规章制度" nzLabel="规章制度"></nz-option>
@@ -280,7 +291,7 @@
                 <nz-option nzValue="总指标" nzLabel="总指标"></nz-option>
             </nz-select>
         </li>
-        <li *ngIf="statusParameter.con == '工程管理'">
+        <li *ngIf="statusParameter.con == '工程管理' && statusParameter.can != '总指标'">
             <span><i class="red"></i>描述</span>
             <nz-radio-group [(ngModel)]="statusParameter.value">
                 <label nz-radio nzValue="规范">规范</label>
@@ -305,6 +316,7 @@
         </li>
     </ul>
 </nz-modal>
+
 <!-- 工程险情新增 -->
 <nz-modal [(nzVisible)]="dangerAdd" nzTitle="工程险情新增" (nzOnCancel)="dangerAdd=false" (nzOnOk)="dangerSubmit()">
     <ul class="paremter_list">
@@ -323,6 +335,7 @@
         </li>
     </ul>
 </nz-modal>
+
 <!-- 工程档案新增 -->
 <nz-modal [(nzVisible)]="archivesAdd" nzTitle="工程档案新增" (nzOnCancel)="archivesAdd=false" (nzOnOk)="archiveSumbit()">
     <ul class="paremter_list">
@@ -341,6 +354,7 @@
         </li>
     </ul>
 </nz-modal>
+
 <!-- 工程修改/加固新增 -->
 <nz-modal [(nzVisible)]="strengtheningAdd" nzTitle="工程修改/加固新增" (nzOnCancel)="strengtheningAdd=false"
     (nzOnOk)="strengtheningSubmit()">
@@ -360,6 +374,7 @@
         </li>
     </ul>
 </nz-modal>
+
 <!-- 安全检测新增 -->
 <nz-modal [(nzVisible)]="inspectionAdd" nzTitle="安全检测新增" (nzOnCancel)="inspectionAdd=false"
     (nzOnOk)="inspectionSumbit()">
@@ -379,7 +394,7 @@
         </li>
         <li>
             <span><i class="red">*</i>水闸两侧岸</span>
-            <nz-select [(ngModel)]="inspectionParameter.part" nzAllowClear nzPlaceHolder="部件">
+            <nz-select [(ngModel)]="inspectionParameter.part" nzAllowClear nzPlaceHolder="水闸两侧岸">
                 <nz-option nzValue="上游连接段" nzLabel="上游连接段"></nz-option>
                 <nz-option nzValue="下游连接段" nzLabel="下游连接段"></nz-option>
                 <nz-option nzValue="闸室" nzLabel="闸室"></nz-option>
@@ -387,7 +402,7 @@
         </li>
         <li>
             <span><i class="red">*</i>请选择部位</span>
-            <nz-select [(ngModel)]="inspectionParameter.site" nzAllowClear nzPlaceHolder="部件">
+            <nz-select [(ngModel)]="inspectionParameter.site" nzAllowClear nzPlaceHolder="请选择部位">
                 <nz-option *ngFor="let data of partSite[inspectionParameter.part]" [nzValue]="data" [nzLabel]="data">
                 </nz-option>
             </nz-select>
@@ -425,13 +440,13 @@
         </li>
         <li>
             <span><i class="red">*</i>综合状态值</span>
-            <nz-select *ngIf="inspectionParameter.site != '启闭机' && inspectionParameter.name != '总工程质量'" [(ngModel)]="inspectionParameter.state" nzAllowClear
-                nzPlaceHolder="综合状态值">
+            <nz-select *ngIf="inspectionParameter.site != '启闭机' && inspectionParameter.name != '总工程质量'"
+                [(ngModel)]="inspectionParameter.state" nzAllowClear nzPlaceHolder="综合状态值">
                 <nz-option nzValue="满足" nzLabel="满足"></nz-option>
                 <nz-option nzValue="不满足" nzLabel="不满足"></nz-option>
             </nz-select>
-            <nz-select *ngIf="inspectionParameter.site == '启闭机' || inspectionParameter.name == '总工程质量'" [(ngModel)]="inspectionParameter.state" nzAllowClear
-                nzPlaceHolder="综合状态值">
+            <nz-select *ngIf="inspectionParameter.site == '启闭机' || inspectionParameter.name == '总工程质量'"
+                [(ngModel)]="inspectionParameter.state" nzAllowClear nzPlaceHolder="综合状态值">
                 <nz-option nzValue="一类" nzLabel="一类"></nz-option>
                 <nz-option nzValue="二类" nzLabel="二类"></nz-option>
                 <nz-option nzValue="三类" nzLabel="三类"></nz-option>
@@ -440,6 +455,7 @@
         </li>
     </ul>
 </nz-modal>
+
 <!-- 安全复核新增 -->
 <nz-modal [(nzVisible)]="securityCheck" nzTitle="安全复核新增" (nzOnCancel)="securityCheck=false"
     (nzOnOk)="securitycheckSumbit()">
@@ -468,39 +484,196 @@
         </li>
     </ul>
 </nz-modal>
-<!-- 安全检测查询 -->
-<nz-modal [(nzVisible)]="securitycheckModle" nzWidth="1000px" nzTitle="安全检测查询" (nzOnCancel)="securitycheckModle=false"
-    (nzOnOk)="securitycheckModle=false">
-    <nz-table #securiTable nzSize="small" [nzData]="securityData" [nzFrontPagination]='false' [nzBordered]="true"
-        [nzScroll]="{ y: '280px' }">
+
+<!-- 现状调查查询 -->
+<nz-modal [(nzVisible)]="statusqoSearch" nzWidth="1000px" nzTitle="现状调查查询" (nzOnCancel)="statusqoSearch=false"
+    (nzOnOk)="statusqoSearch=false">
+    <nz-table #statusqoTable nzSize="small" [nzData]="statusqoAlldata" [nzFrontPagination]='true' [nzBordered]="true">
         <thead>
             <tr>
                 <th [nzAlign]="'center'" nzWidth="60px">序号</th>
-                <th [nzAlign]="'center'" nzWidth="12%">部件</th>
-                <th [nzAlign]="'center'" nzWidth="12%">部位</th>
-                <th [nzAlign]="'center'" nzWidth="12%">指标名</th>
-                <th [nzAlign]="'center'" nzWidth="10%">极大值</th>
-                <th [nzAlign]="'center'" nzWidth="10%">极小值</th>
-                <th [nzAlign]="'center'" nzWidth="10%">平均值</th>
-                <th [nzAlign]="'center'" nzWidth="15%">规范/设计要求值</th>
-                <th [nzAlign]="'center'">综合状态值</th>
+                <th [nzAlign]="'center'" nzWidth="20%">工程名称</th>
+                <th [nzAlign]="'center'" nzWidth="10%">创建时间</th>
+                <th [nzAlign]="'center'" nzWidth="20%">工程设施</th>
+                <th [nzAlign]="'center'" nzWidth="20%">对应参数</th>
+                <th [nzAlign]="'center'" nzWidth="15%">描述</th>
+                <th [nzAlign]="'center'">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of statusqoTable.data;let i=index;">
+                <td [nzAlign]="'center'">{{i+1}}</td>
+                <td [nzAlign]="'center'">{{currentData.name}}</td>
+                <td [nzAlign]="'center'">{{data.year}}</td>
+                <td [nzAlign]="'center'">
+                    <nz-select [ngStyle]="{'width': '90%'}" nzSize="small" [(ngModel)]="data.con" nzAllowClear
+                        nzPlaceHolder="工程设施" [nzDisabled]="data.disabled">
+                        <nz-option nzValue="土工建筑物" nzLabel="土工建筑物"></nz-option>
+                        <nz-option nzValue="石工建筑物" nzLabel="石工建筑物"></nz-option>
+                        <nz-option nzValue="混凝土建筑物" nzLabel="混凝土建筑物"></nz-option>
+                        <nz-option nzValue="金属结构" nzLabel="金属结构"></nz-option>
+                        <nz-option nzValue="机电设备" nzLabel="机电设备"></nz-option>
+                        <nz-option nzValue="工程管理" nzLabel="工程管理"></nz-option>
+                        <nz-option nzValue="安全检测" nzLabel="安全检测"></nz-option>
+                    </nz-select>
+                </td>
+                <td [nzAlign]="'center'">
+                    <nz-select [ngStyle]="{'width': '90%'}" nzSize="small" *ngIf="data.con == '混凝土建筑物'"
+                        [(ngModel)]="data.can" nzAllowClear nzPlaceHolder="对应参数" [nzDisabled]="data.disabled">
+                        <nz-option nzValue="结构裂缝" nzLabel="结构裂缝"></nz-option>
+                        <nz-option nzValue="锈胀裂缝" nzLabel="锈胀裂缝"></nz-option>
+                        <nz-option nzValue="空鼓露筋" nzLabel="空鼓露筋"></nz-option>
+                        <nz-option nzValue="边角破损" nzLabel="边角破损"></nz-option>
+                        <nz-option nzValue="质量缺陷" nzLabel="质量缺陷"></nz-option>
+                    </nz-select>
+                    <nz-select [ngStyle]="{'width': '90%'}" nzSize="small" *ngIf="data.con == '金属结构'"
+                        [(ngModel)]="data.can" nzAllowClear nzPlaceHolder="对应参数" [nzDisabled]="data.disabled">
+                        <nz-option nzValue="锈蚀" nzLabel="锈蚀"></nz-option>
+                        <nz-option nzValue="弯曲" nzLabel="弯曲"></nz-option>
+                        <nz-option nzValue="安装件缺失" nzLabel="安装件缺失"></nz-option>
+                        <nz-option nzValue="破损" nzLabel="破损"></nz-option>
+                    </nz-select>
+                    <nz-select [ngStyle]="{'width': '90%'}" nzSize="small" *ngIf="data.con == '工程管理'"
+                        [(ngModel)]="data.can" nzAllowClear nzPlaceHolder="对应参数" [nzDisabled]="data.disabled">
+                        <nz-option nzValue="管理体制" nzLabel="管理体制"></nz-option>
+                        <nz-option nzValue="管理机构设置" nzLabel="管理机构设置"></nz-option>
+                        <nz-option nzValue="规章制度" nzLabel="规章制度"></nz-option>
+                        <nz-option nzValue="人员编制" nzLabel="人员编制"></nz-option>
+                        <nz-option nzValue="管养经费" nzLabel="管养经费"></nz-option>
+                        <nz-option nzValue="总指标" nzLabel="总指标"></nz-option>
+                    </nz-select>
+                </td>
+                <td>
+                    <nz-radio-group *ngIf="data.con == '工程管理' && statusParameter.can != '总指标'"
+                        [ngStyle]="{'width': '90%'}" nzSize="small" [(ngModel)]="data.value"
+                        [nzDisabled]="data.disabled">
+                        <label nz-radio nzValue="规范">规范</label>
+                        <label nz-radio nzValue="较规范">较规范</label>
+                        <label nz-radio nzValue="不规范">不规范</label>
+                    </nz-radio-group>
+                    <nz-radio-group *ngIf="statusParameter.con == '混凝土建筑物' || statusParameter.con == '金属结构'"
+                        [ngStyle]="{'width': '90%'}" nzSize="small" [(ngModel)]="statusParameter.value"
+                        [nzDisabled]="data.disabled">
+                        <label nz-radio nzValue="有">有</label>
+                        <label nz-radio nzValue="无">无</label>
+                    </nz-radio-group>
+                    <nz-radio-group *ngIf="statusParameter.can == '总指标'" [ngStyle]="{'width': '90%'}" nzSize="small"
+                        [(ngModel)]="statusParameter.value" [nzDisabled]="data.disabled">
+                        <label nz-radio nzValue="A级">A级</label>
+                        <label nz-radio nzValue="B级">B级</label>
+                        <label nz-radio nzValue="C级">C级</label>
+                    </nz-radio-group>
+                </td>
+                <td [nzAlign]="'center'">
+                    <i *ngIf="data.disabled" nz-icon nzType="form" nzTheme="outline" nz-tooltip nzTooltipTitle="编辑"
+                        (click)="data.disabled=false"></i>
+                    <i *ngIf="!data.disabled" nz-icon nzType="save" nzTheme="outline" nz-tooltip nzTooltipTitle="保存"
+                        (click)="updParam(data)"></i>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <i nz-icon [nzType]="'delete'" nz-tooltip nzTooltipTitle="删除" nz-popconfirm nzTitle="是否删除这条数据?"
+                        (nzOnConfirm)="delectlocation(data.id)"></i>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-modal>
+
+<!-- 安全检测查询 -->
+<nz-modal [(nzVisible)]="securitycheckModle" nzWidth="1000px" nzTitle="安全检测查询" (nzOnCancel)="securitycheckModle=false"
+    (nzOnOk)="securitycheckModle=false">
+    <nz-table #securiTable nzSize="small" [nzData]="securityData" [nzFrontPagination]='true' [nzBordered]="true">
+        <thead>
+            <tr>
+                <th [nzAlign]="'center'" nzWidth="60px">序号</th>
+                <th [nzAlign]="'center'" nzWidth="20%">水闸两侧岸</th>
+                <th [nzAlign]="'center'" nzWidth="15%">部位</th>
+                <th [nzAlign]="'center'" nzWidth="10%">指标名</th>
+                <th [nzAlign]="'center'" nzWidth="8%">极大值</th>
+                <th [nzAlign]="'center'" nzWidth="8%">极小值</th>
+                <th [nzAlign]="'center'" nzWidth="8%">平均值</th>
+                <th [nzAlign]="'center'" nzWidth="10%">规范/设计要求值</th>
+                <th [nzAlign]="'center'" nzWidth="10%">综合状态值</th>
+                <th [nzAlign]="'center'">操作</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let data of securiTable.data;let i=index;">
                 <td [nzAlign]="'center'">{{i+1}}</td>
-                <td [nzAlign]="'center'">{{data.part}}</td>
-                <td [nzAlign]="'center'">{{data.site}}</td>
-                <td [nzAlign]="'center'">{{data.name}}</td>
-                <td [nzAlign]="'center'">{{data.max}}</td>
-                <td [nzAlign]="'center'">{{data.min}}</td>
-                <td [nzAlign]="'center'">{{data.avg}}</td>
-                <td [nzAlign]="'center'">{{data.value}}</td>
-                <td [nzAlign]="'center'">{{data.state}}</td>
+                <td [nzAlign]="'center'">
+                    <!-- <input nz-input nzSize="small" type="text" [(ngModel)]="data.part" [disabled]="data.disabled"> -->
+                    <nz-select [ngStyle]="{'width': '90%'}" nzSize="small" [nzDisabled]="data.disabled"
+                        [(ngModel)]="data.part" nzAllowClear nzPlaceHolder="水闸两侧岸">
+                        <nz-option nzValue="上游连接段" nzLabel="上游连接段"></nz-option>
+                        <nz-option nzValue="下游连接段" nzLabel="下游连接段"></nz-option>
+                        <nz-option nzValue="闸室" nzLabel="闸室"></nz-option>
+                    </nz-select>
+                </td>
+                <td [nzAlign]="'center'">
+                    <nz-select [ngStyle]="{'width': '90%'}" nzAllowClear nzSize="small" [nzDisabled]="data.disabled"
+                        [(ngModel)]="data.site" nzPlaceHolder="请选择部位">
+                        <nz-option *ngFor="let item of partSite[data.part]" [nzValue]="item" [nzLabel]="item">
+                        </nz-option>
+                    </nz-select>
+                </td>
+                <td [nzAlign]="'center'">
+                    <nz-select *ngIf="data.site != '启闭机' && inspectionParameter.name != '总工程质量'"
+                        [ngStyle]="{'width': '90%'}" nzSize="small" [(ngModel)]="data.name" nzAllowClear
+                        nzPlaceHolder="指标名" [disabled]="data.disabled">
+                        <nz-option nzValue="混凝土强度" nzLabel="混凝土强度"></nz-option>
+                        <nz-option nzValue="碳化深度" nzLabel="碳化深度"></nz-option>
+                        <nz-option nzValue="保护层厚度" nzLabel="保护层厚度"></nz-option>
+                        <nz-option nzValue="裂缝宽度" nzLabel="裂缝宽度"></nz-option>
+                        <nz-option nzValue="钢筋锈蚀率" nzLabel="钢筋锈蚀率"></nz-option>
+                        <nz-option nzValue="腐蚀和蚀余厚度" nzLabel="腐蚀和蚀余厚度"></nz-option>
+                        <nz-option nzValue="变形" nzLabel="变形"></nz-option>
+                        <nz-option nzValue="沉降" nzLabel="沉降"></nz-option>
+                        <nz-option nzValue="总工程质量" nzLabel="总工程质量"></nz-option>
+                        <nz-option nzValue="机电设备(启闭机)" nzLabel="机电设备(启闭机)"></nz-option>
+                    </nz-select>
+                </td>
+                <td [nzAlign]="'center'">
+                    <input [ngStyle]="{'width': '90%'}" nz-input nzSize="small" type="text" [(ngModel)]="data.max"
+                        [disabled]="data.disabled">
+                </td>
+                <td [nzAlign]="'center'">
+                    <input [ngStyle]="{'width': '90%'}" nz-input nzSize="small" type="text" [(ngModel)]="data.min"
+                        [disabled]="data.disabled">
+                </td>
+                <td [nzAlign]="'center'">
+                    <input [ngStyle]="{'width': '90%'}" nz-input nzSize="small" type="text" [(ngModel)]="data.avg"
+                        [disabled]="data.disabled">
+                </td>
+                <td [nzAlign]="'center'">
+                    <input [ngStyle]="{'width': '90%'}" nz-input nzSize="small" type="text" [(ngModel)]="data.value"
+                        [disabled]="data.disabled">
+                </td>
+                <td [nzAlign]="'center'">
+                    <nz-select [ngStyle]="{'width': '90%'}" nzSize="small"
+                        *ngIf="data.site == '启闭机' || inspectionParameter.name == '总工程质量'" [(ngModel)]="data.state"
+                        nzAllowClear nzPlaceHolder="综合状态值" [disabled]="data.disabled">
+                        <nz-option nzValue="一类" nzLabel="一类"></nz-option>
+                        <nz-option nzValue="二类" nzLabel="二类"></nz-option>
+                        <nz-option nzValue="三类" nzLabel="三类"></nz-option>
+                        <nz-option nzValue="四类" nzLabel="四类"></nz-option>
+                    </nz-select>
+                    <nz-select [ngStyle]="{'width': '90%'}" nzSize="small"
+                        *ngIf="data.site != '启闭机' && inspectionParameter.name != '总工程质量'" [(ngModel)]="data.state"
+                        nzAllowClear nzPlaceHolder="综合状态值" [disabled]="data.disabled">
+                        <nz-option nzValue="满足" nzLabel="满足"></nz-option>
+                        <nz-option nzValue="不满足" nzLabel="不满足"></nz-option>
+                    </nz-select>
+                </td>
+                <td [nzAlign]="'center'">
+                    <i *ngIf="data.disabled" nz-icon nzType="form" nzTheme="outline" nz-tooltip nzTooltipTitle="编辑"
+                        (click)="data.disabled=false"></i>
+                    <i *ngIf="!data.disabled" nz-icon nzType="save" nzTheme="outline" nz-tooltip nzTooltipTitle="保存"
+                        (click)="inspectionseditSumbit(data)"></i>
+                </td>
             </tr>
         </tbody>
     </nz-table>
 </nz-modal>
+
 <!-- 图片新增 -->
 <nz-modal [(nzVisible)]="customModify" nzTitle="图片新增" (nzOnCancel)="customModify=false" (nzOnOk)="imgaddSubmit()">
     <p>工程名称: {{currentData.name}}</p>
@@ -517,6 +690,7 @@
         </ng-template>
     </nz-modal>
 </nz-modal>
+
 <!-- 图片删除 -->
 <nz-modal [(nzVisible)]="imagesDelect" nzWidth="800px" nzTitle="图片删除" (nzOnCancel)="imagesDelect=false"
     (nzOnOk)="imagesDelect=false">
@@ -528,6 +702,7 @@
         </li>
     </ul>
 </nz-modal>
+
 <!-- 视频上传 -->
 <nz-modal [(nzVisible)]="videoAddmodify" nzWidth="800px" nzTitle="视频上传" (nzOnCancel)="videoAddmodify=false"
     (nzOnOk)="videoAddSubmit()">
@@ -545,6 +720,7 @@
         </ng-template>
     </nz-modal>
 </nz-modal>
+
 <!-- 工程详情 -->
 <nz-drawer [nzVisible]="projectModify" [nzWidth]="640" [nzClosable]="false" (nzOnClose)="projectModify=false">
     <nz-descriptions [nzColumn]="2" [nzTitle]="projectInformation.name">
